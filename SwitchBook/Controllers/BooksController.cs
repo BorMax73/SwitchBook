@@ -70,7 +70,7 @@ namespace SwitchBook
                     Title = bookvm.Title,
                     Author = bookvm.Author,
                     Description = bookvm.Description,
-                    OwnerId = bookvm.OwnerId
+                    OwnerId = _context.Users.First(x=>x.UserName == User.Identity.Name).Id,
                 };
                 if (bookvm.Image != null)
                 {

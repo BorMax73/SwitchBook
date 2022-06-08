@@ -8,9 +8,11 @@ using SwitchBook.Models;
 
 namespace SwitchBook.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<Address> Address { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
