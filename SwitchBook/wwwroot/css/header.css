@@ -1,0 +1,27 @@
+﻿.header_wrapper {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(189, 166, 152, 0.5) 0%, rgba(189, 166, 152, 0) 100%);
+}
+header{
+    font-weight: 500;
+    font-size: 1.2vw;
+}
+.header_logo_img{
+    width: calc(30px + 1.5vw);
+    margin-bottom: 7px;
+}
+.header_logo_text {
+    font-size: calc(20px + 1vw);
+    color: #312A1B;
+}
+.header_logo_text:hover{
+    color: black;
+}
+.header_logo_text p{
+
+}
+
+/* footer */
+.footer {
+    background: linear-gradient(0deg, rgba(189, 166, 152, 0.5) 0%, rgba(189, 166, 152, 0) 100%);
+}
