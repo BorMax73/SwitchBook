@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SwitchBook.Controllers
 {
@@ -6,6 +7,7 @@ namespace SwitchBook.Controllers
     {
         public IActionResult Index()
         {
+            
             return View();
         }
     }

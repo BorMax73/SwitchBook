@@ -18,8 +18,11 @@ namespace SwitchBook.Controllers
         }
         public async Task<IActionResult> Index()
         {
+           
+            
             var ownerId = await _context.Users.FirstAsync(x => x.UserName == User.Identity.Name);
-            return View(await _context.Books.Where(x=>x.OwnerId == ownerId.Id).ToListAsync());
+            var mybooks = await _context.Books.Where(x => x.OwnerId == ownerId.Id).ToListAsync();
+            return View(mybooks);
         }
         public async Task<IActionResult> Edit(int? id)
         {

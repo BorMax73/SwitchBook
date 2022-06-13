@@ -55,20 +55,20 @@ namespace SwitchBook.Controllers
             {
                 return Redirect("/Home");
             }
-            Address address = new Address()
-            {
-                Region = order.Region,
+            //Address address = new Address()
+            //{
+            //    Region = order.Region,
 
-                City = order.City,
+            //    City = order.City,
 
-                Street = order.Street,
-                PostalCode = order.PostalCode,
+            //    Street = order.Street,
+            //    PostalCode = order.PostalCode,
 
-                PhoneNumber = order.PhoneNumber,
+            //    PhoneNumber = order.PhoneNumber,
 
-            };
-            await _db.Address.AddAsync(address);
-            await _db.SaveChangesAsync();
+            //};
+            //await _db.Address.AddAsync(address);
+            //await _db.SaveChangesAsync();
             Order newOrder = new Order()
             {
                 FirstBookId = order.FirstBookId,
