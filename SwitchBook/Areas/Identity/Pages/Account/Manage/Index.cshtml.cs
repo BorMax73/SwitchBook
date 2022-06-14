@@ -36,6 +36,8 @@ namespace SwitchBook.Areas.Identity.Pages.Account.Manage
 
         public class InputModel : ICloneable
         {
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
 
             [Display(Name = "Region")]
             public string Region { get; set; }
@@ -58,6 +60,7 @@ namespace SwitchBook.Areas.Identity.Pages.Account.Manage
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
+            
             //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var address = _db.Address.FirstOrDefault(x => x.Id == _userManager.GetUserAsync(User).Result.AddressId);
             Username = userName;
@@ -65,6 +68,7 @@ namespace SwitchBook.Areas.Identity.Pages.Account.Manage
             {
                 Input = new InputModel
                 {
+                    UserName = userName,
                     PhoneNumber = address.PhoneNumber,
                     Street = address.Street,
                     City = address.City,
@@ -126,7 +130,12 @@ namespace SwitchBook.Areas.Identity.Pages.Account.Manage
             //        return RedirectToPage();
             //    }
             //}
-
+            var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.UserName);
+            if (!setUserNameResult.Succeeded)
+            {
+                StatusMessage = "Unexpected error when trying to set User Name.";
+                return RedirectToPage();
+            }
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

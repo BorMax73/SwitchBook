@@ -47,6 +47,8 @@ namespace SwitchBook
 
             var book = await _context.Books
                 .FirstOrDefaultAsync(m => m.Id == id);
+            var owner = await _context.Users.FirstOrDefaultAsync(x => x.Id == book.OwnerId);
+            ViewBag.Owner = owner.UserName;
             if (book == null)
             {
                 return NotFound();
