@@ -25,9 +25,16 @@ namespace SwitchBook
 
         // GET: Books
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string query)
         {
-            return View(await _context.Books.ToListAsync());
+            if (string.IsNullOrEmpty(query))
+            {
+                return View(await _context.Books.ToListAsync());
+            }
+            var books = await _context.Books.Where(x =>
+                EF.Functions.Like(x.Title, $"%{query}%") || EF.Functions.Like(x.Author, $"%{query}%") ||
+                EF.Functions.Like(x.Description, $"%{query}%")).ToListAsync();
+            return View(books);
         }
 
         // GET: Books/Details/5
