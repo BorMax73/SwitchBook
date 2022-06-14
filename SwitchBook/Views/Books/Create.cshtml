@@ -1,7 +1,7 @@
 ﻿@model SwitchBook.ViewModels.BookViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Додати книгу";
 }
 
 <h1>Create</h1>
@@ -22,11 +22,6 @@
                 <input asp-for="Author" class="form-control" />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
-           @* <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                <input asp-for="OwnerId" class="form-control" />
-                <span asp-validation-for="OwnerId" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -34,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" name="Image" type="file" class="form-control" />
+                <input asp-for="Image" name="Image" type="file" class="form-control" style="height: min-content; padding: 3px;" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
