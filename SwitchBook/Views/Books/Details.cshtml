@@ -1,52 +1,49 @@
 ﻿ @model SwitchBook.Models.Book
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.Title;
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model=>model.OwnerId)
-        </dt>
-        <dd class = "col-sm-10">
-            <p>@ViewBag.Owner</p>
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @if (Model.Image != null)
-            {
-                <img style='width:80px; height:60px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Image))" />
-            }
-        </dd>
-    </dl>
-</div>
- <div>
-     <a href="/Trade?id=@Model.Id">Trade</a>
-     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-     <a asp-action="Index">Back to List</a>
+<h1>Книга "@Model.Title"</h1>
+ <h4>Деталі</h4>
+ <div class="row book_details">
+    
+     <hr />
+     <div class="col-md-3">
+         @if (Model.Image != null)
+         {
+             <img style="width: 100%;" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Image))" />
+         }
+     </div>
+     <dl class="col-md-9">
+         <dt class = "col-sm-2">
+             Назва
+         </dt>
+         <dd class = "col-sm-10">
+             @Html.DisplayFor(model => model.Title)
+         </dd>
+         <dt class = "col-sm-2">
+             Автор
+         </dt>
+         <dd class = "col-sm-10">
+             @Html.DisplayFor(model => model.Author)
+         </dd>
+         <dt class = "col-sm-2">
+             Власник
+         </dt>
+         <dd class = "col-sm-10">
+             <p>@ViewBag.Owner</p>
+         </dd>
+         <dt class = "col-sm-2">
+             Опис
+         </dt>
+         <dd class = "col-sm-10">
+             @Html.DisplayFor(model => model.Description)
+         </dd>
+     </dl>
+ </div>
+ <div class="book_details">
+     <hr/>
+     <a asp-action="Index" class="btn">Back to List</a>
+     <a href="/Trade?id=@Model.Id" class="btn">Trade</a>
  </div>
