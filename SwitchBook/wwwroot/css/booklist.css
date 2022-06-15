@@ -54,10 +54,15 @@
     margin: 10px;
     word-wrap: break-word;
 }
-.avaliable_book_text *:last-child{
+.avaliable_book_text_description {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.avaliable_book_text_buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /*book details*/
@@ -68,18 +73,19 @@
     padding: 15px;
     margin: 0px;
 }
-.book_details:last-child {
+.book_buttons {
     text-align: center;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    background: rgba(189, 166, 152, 0.1);
+    padding: 15px;
+    margin: 0px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
-.book_details .btn {
+.btn_book {
     font-weight: 600;
     background: rgba(189, 166, 152, 0.5);
     margin: 15px;
 }
-.book_details .btn:hover {
+.btn_book:hover {
     background: rgba(189, 166, 152, 1);
 }

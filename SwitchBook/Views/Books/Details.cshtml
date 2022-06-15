@@ -7,8 +7,6 @@
 <h1>Книга "@Model.Title"</h1>
  <h4>Деталі</h4>
  <div class="row book_details">
-    
-     <hr />
      <div class="col-md-3">
          @if (Model.Image != null)
          {
@@ -35,15 +33,15 @@
              <p>@ViewBag.Owner</p>
          </dd>
          <dt class = "col-sm-2">
-             Опис
+             Відгук
          </dt>
          <dd class = "col-sm-10">
              @Html.DisplayFor(model => model.Description)
          </dd>
      </dl>
  </div>
- <div class="book_details">
+ <div class="book_buttons">
      <hr/>
-     <a asp-action="Index" class="btn">Back to List</a>
-     <a href="/Trade?id=@Model.Id" class="btn">Trade</a>
+     <a asp-action="Index" class="btn btn_book">Back to List</a>
+     <a href="/Trade?id=@Model.Id" class="btn btn_book">Trade</a>
  </div>
