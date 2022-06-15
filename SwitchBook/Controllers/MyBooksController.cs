@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SwitchBook.Data;
+using SwitchBook.Models;
 
 namespace SwitchBook.Controllers
 {
@@ -35,6 +38,48 @@ namespace SwitchBook.Controllers
             if (book == null)
             {
                 return NotFound();
+            }
+            return View(book);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,OwnerId,Description,Image")] Book book, IFormFile ImageEdit)
+        {
+            if (id != book.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (ImageEdit != null)
+                    {
+                        byte[] imageData = null;
+                        // считываем переданный файл в массив байтов
+                        using (var binaryReader = new BinaryReader(ImageEdit.OpenReadStream()))
+                        {
+                            imageData = binaryReader.ReadBytes((int)ImageEdit.Length);
+                        }
+                        // установка массива байтов
+                        book.Image = imageData;
+                    }
+                    _context.Update(book);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BookExists(book.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(book);
         }
