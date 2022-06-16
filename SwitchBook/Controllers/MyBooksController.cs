@@ -43,7 +43,7 @@ namespace SwitchBook.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,OwnerId,Description,Image")] Book book, IFormFile ImageEdit)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,OwnerId,Description, Image")] Book book, IFormFile ImageEdit)
         {
             if (id != book.Id)
             {
