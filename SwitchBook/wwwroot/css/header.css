@@ -6,7 +6,7 @@
 header {
     white-space: nowrap;
     font-weight: 500;
-    font-size: calc(14px + 0.1vw);
+    font-size: calc(16px + 0.1vw);
 }
 
 .header_logo_img {

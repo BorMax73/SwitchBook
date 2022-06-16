@@ -1,63 +1,37 @@
 ﻿@model IEnumerable<SwitchBook.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Пошук книги";
 }
 
-<h1>Index</h1>
+<h1>Доступні книги</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn_book">Додати книгу</a>
 </p>
-<form asp-action="Index">
+<form asp-action="Index" class="book_search">
     <input type="text" name="query"/>
     <input type="submit" value="Пошук"/>
 </form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @if (item.Image != null)
-                {
-                    <img style='width:80px; height:60px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Image))" />
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="avaliable_books">
+    @foreach (var item in Model)
+    {
+        <a class="avaliable_book" asp-action="Details" asp-route-id="@item.Id">
+            @if (item.Image != null)
+            {
+                <img class="avaliable_book_image" src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Image))"/>
+            }
+            else
+            {
+                <div class="avaliable_book_image"></div>
+            }
+            <div class="avaliable_book_text">
+                <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                <hr/>
+                <h5>@Html.DisplayFor(modelItem => item.Author)</h5>
+                <h6 maxlength="1">@Html.DisplayFor(modelItem => item.Description)</h6>
+            </div>
+        </a>
+    }
+</div>

@@ -1,14 +1,16 @@
 ﻿@model SwitchBook.ViewModels.TradeViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Обмін";
 }
+
+<h1>Книга "@Model.Book.Title"</h1>
+<h4>Деталі</h4>
+
 <div>
     @Html.DisplayFor(modelItem => Model.Book.Title)
     @Html.DisplayFor(modelItem => Model.Book.Author)
     @Html.DisplayFor(modelItem => Model.Book.Description)
-
-
 </div>
 <table class="table">
     <thead>
