@@ -22,8 +22,11 @@ namespace SwitchBook.Controllers
         // GET: TradeController
         public async Task<ActionResult> Index(int bookId)
         {
+
             if (ModelState.IsValid)
             {
+                ViewBag.bookId = bookId;
+                
                 var owner = await _db.Users.FirstAsync(x => x.UserName == User.Identity.Name);
                
                 var myBooks = await _db.Books.Where(x => x.OwnerId == owner.Id).ToListAsync();
@@ -40,43 +43,34 @@ namespace SwitchBook.Controllers
             return View();
         }
 
-        // GET: TradeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: TradeController/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: TradeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(OrderViewModel order)
+        public async Task<ActionResult> Create(int bookId, int myBookId)
         {
             if (!ModelState.IsValid)
             {
                 return Redirect("/Home");
             }
-            //Address address = new Address()
-            //{
-            //    Region = order.Region,
 
-            //    City = order.City,
-
-            //    Street = order.Street,
-            //    PostalCode = order.PostalCode,
-
-            //    PhoneNumber = order.PhoneNumber,
-
-            //};
-            //await _db.Address.AddAsync(address);
-            //await _db.SaveChangesAsync();
+            var firstAddress = await _db.Address.FirstOrDefaultAsync(x =>
+                x.Id == _db.Users.FirstOrDefault(x => x.Id == _db.Books.Find(bookId).OwnerId).AddressId);
+            var secondAddress = await _db.Address.FirstOrDefaultAsync(x =>
+                x.Id == _db.Users.FirstOrDefault(x => x.Id == _db.Books.Find(myBookId).OwnerId).AddressId);
             Order newOrder = new Order()
             {
-                FirstBookId = order.FirstBookId,
-                LastBookId = order.LastBookId,
+                FirstBookId = bookId,
+                LastBookId = myBookId,
+                
+                FirstAddressId = firstAddress.Id,
 
-                FirstAddressId = _db.Address.First(x=>x.PhoneNumber == order.PhoneNumber && x.Street == order.Street).Id,
-
-                LastAddressId = 0, // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                LastAddressId = secondAddress.Id,
 
                 IsConfirm  = false
 
