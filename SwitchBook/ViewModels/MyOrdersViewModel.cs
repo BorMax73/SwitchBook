@@ -14,5 +14,6 @@ namespace SwitchBook.ViewModels
     {
        public OrderInfo Requests { get; set; }
        public OrderInfo History { get; set; }
+       public OrderInfo MyRequests { get; set; }
     }
 }

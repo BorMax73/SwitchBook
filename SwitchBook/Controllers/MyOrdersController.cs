@@ -28,7 +28,15 @@ namespace SwitchBook.Controllers
                 b2.Add(await _db.Books.FirstOrDefaultAsync(x => x.Id == order.LastBookId));
 
             }
+            var orderMyRequest = await _db.Orders.Where(x => myBooks.Select(b => b.Id).Contains(x.LastBookId) && x.IsConfirm == false).ToListAsync();
+            var b1M = new List<Book>();
+            var b2M= new List<Book>();
+            foreach (var order in orderMyRequest)
+            {
+                b1M.Add(await _db.Books.FirstOrDefaultAsync(x => x.Id == order.FirstBookId));
+                b2M.Add(await _db.Books.FirstOrDefaultAsync(x => x.Id == order.LastBookId));
 
+            }
 
             //var b1 = await _db.Books.Where(x=>orderRequest.Select(b=>b.FirstBookId).Contains(x.Id)).ToListAsync();
             //var b2 = await _db.Books.Where(x=>orderRequest.Select(b=>b.LastBookId).Contains(x.Id)).ToListAsync();
@@ -47,7 +55,8 @@ namespace SwitchBook.Controllers
             MyOrdersViewModel viewModel = new MyOrdersViewModel()
             {
                 Requests = new OrderInfo(){Books1 = b1, Books2 = b2, Orders = orderRequest},
-                History = new OrderInfo(){Orders = orderHistory, Books1 = b1H, Books2 = b2H}
+                History = new OrderInfo(){Orders = orderHistory, Books1 = b1H, Books2 = b2H},
+                MyRequests = new OrderInfo(){Orders = orderMyRequest, Books1 = b1M, Books2 = b2M}
                 
             };
             

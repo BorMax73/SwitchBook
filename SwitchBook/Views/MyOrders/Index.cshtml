@@ -29,10 +29,29 @@
     }
 </div>
 <div>
+    @if (Model.MyRequests != null && Model.MyRequests.Books1.Count > 0)
+    {
+        <h3>Пропозиції обміну</h3>
+        @for (int i = 0; i < Model.MyRequests.Books1.Count; i++)
+        {
+            <a href="/MyOrders/OrderDetails?OrderId=@Model.MyRequests.Orders[i].Id">DETAILS</a>
+            <div>
+                <p>@Model.MyRequests.Books1[i].Title</p>
+            </div>
+            <div>
+                <p>@Model.MyRequests.Books2[i].Title</p>
+            </div>
+            <form asp-action="DeleteRequest">
+                <input type="hidden" name="OrderId" value="@Model.MyRequests.Orders[i].Id"/>
+                <input type="submit" value="Відхилити"/>
+            </form>
+        }
+    }
+</div>
+<div>
     <h3>Історія</h3>
 @if (Model.History != null && Model.History.Books1.Count > 0)
 {
-    <h3>Пропозиції обміну</h3>
     @for (int i = 0; i < Model.History.Books1.Count; i++)
     {
 
