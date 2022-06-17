@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SwitchBook.Models;
+using SwitchBook.ViewModels;
 
 namespace SwitchBook.Controllers
 {
@@ -20,10 +21,38 @@ namespace SwitchBook.Controllers
             var orderRequest = await _db.Orders.Where(x=>myBooks.Select(b=>b.Id).Contains(x.FirstBookId) && x.IsConfirm ==false).ToListAsync();
             var b1 = await _db.Books.Where(x=>orderRequest.Select(b=>b.FirstBookId).Contains(x.Id)).ToListAsync();
             var b2 = await _db.Books.Where(x=>orderRequest.Select(b=>b.LastBookId).Contains(x.Id)).ToListAsync();
+            MyOrdersViewModel viewModel = new MyOrdersViewModel()
+            {
+                Requests = new OrderInfo(){Books1 = b1, Books2 = b2, Orders = orderRequest}
+            };
+            
 
-            var books1 = _db.Books;  
+            return View(viewModel);
+        }
 
-            return Ok(b1);
+        public async Task<IActionResult> ConfirmRequest(int OrderId)
+        {
+            var order = await _db.Orders.FirstOrDefaultAsync(x => x.Id == OrderId);
+            if (order == null)
+                return NotFound();
+            order.IsConfirm = true;
+            _db.Orders.Update(order);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRequest(int OrderId)
+        {
+            var order = await _db.Orders.FirstOrDefaultAsync(x => x.Id == OrderId);
+            if(order == null)
+                return NotFound();
+            _db.Orders.Remove(order);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
