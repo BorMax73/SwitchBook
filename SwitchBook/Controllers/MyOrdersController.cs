@@ -21,15 +21,33 @@ namespace SwitchBook.Controllers
             var orderRequest = await _db.Orders.Where(x=>myBooks.Select(b=>b.Id).Contains(x.FirstBookId) && x.IsConfirm ==false).ToListAsync();
             var b1 = await _db.Books.Where(x=>orderRequest.Select(b=>b.FirstBookId).Contains(x.Id)).ToListAsync();
             var b2 = await _db.Books.Where(x=>orderRequest.Select(b=>b.LastBookId).Contains(x.Id)).ToListAsync();
+            var orderHistory = await _db.Orders.Where(x => myBooks.Select(b => b.Id).Contains(x.FirstBookId) && x.IsConfirm == true).ToListAsync();
+            var b1H = await _db.Books.Where(x => orderRequest.Select(b => b.FirstBookId).Contains(x.Id)).ToListAsync();
+            var b2H = await _db.Books.Where(x => orderRequest.Select(b => b.LastBookId).Contains(x.Id)).ToListAsync();
             MyOrdersViewModel viewModel = new MyOrdersViewModel()
             {
-                Requests = new OrderInfo(){Books1 = b1, Books2 = b2, Orders = orderRequest}
+                Requests = new OrderInfo(){Books1 = b1, Books2 = b2, Orders = orderRequest},
+                History = new OrderInfo(){Orders = orderHistory, Books1 = b1H, Books2 = b2H}
+                
             };
             
 
             return View(viewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> OrderDetails(int OrderId)
+        {
+            var order = await _db.Orders.FirstOrDefaultAsync(x => x.Id == OrderId);
+            if (order == null)
+                return NotFound();
+            ViewBag.Book1 = await _db.Books.FirstOrDefaultAsync(x => x.Id == order.FirstBookId);
+            ViewBag.Book2 = await _db.Books.FirstOrDefaultAsync(x => x.Id == order.LastBookId);
+            ViewBag.Address1 = await _db.Address.FirstOrDefaultAsync(x => x.Id == order.FirstAddressId);
+            ViewBag.Address2 = await _db.Address.FirstOrDefaultAsync(x => x.Id == order.LastAddressId);
+            return View();
+        }
+        [HttpPost]
         public async Task<IActionResult> ConfirmRequest(int OrderId)
         {
             var order = await _db.Orders.FirstOrDefaultAsync(x => x.Id == OrderId);
