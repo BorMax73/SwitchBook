@@ -70,6 +70,7 @@ namespace SwitchBook.Controllers
             var order = await _db.Orders.FirstOrDefaultAsync(x => x.Id == OrderId);
             if (order == null)
                 return NotFound();
+            ViewBag.OrderId = order.Id;
             ViewBag.Book1 = await _db.Books.FirstOrDefaultAsync(x => x.Id == order.FirstBookId);
             ViewBag.Book2 = await _db.Books.FirstOrDefaultAsync(x => x.Id == order.LastBookId);
             ViewBag.Address1 = await _db.Address.FirstOrDefaultAsync(x => x.Id == order.FirstAddressId);
